@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Lowongan - Web Designer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #007BFF;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      margin-bottom: 20px;
+    }
+
+    .info strong {
+      display: inline-block;
+      width: 120px;
+      color: #333;
+    }
+
+    .deskripsi {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Talent Finder</h1>
+  </header>
+
+  <div class="container">
+
+    <div style="margin-bottom: 20px;">
+      <button onclick="window.location.href='lowongan.html'" style="background-color: #007BFF; color: #ffffff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">← Kembali ke Lowongan</button>
+    </div>
+
+    <h2>Web Designer</h2>
+
+    <div class="info"><strong>Kategori:</strong> IT</div>
+    <div class="info"><strong>Lokasi:</strong> Remote / Jakarta</div>
+    <div class="info"><strong>Deadline:</strong> 20 Mei 2025</div>
+
+    <div class="deskripsi">
+      <p>
+        Kami mencari Web Designer berbakat untuk mendesain tampilan website perusahaan dengan user interface yang modern dan user-friendly.
+      </p>
+      <p><strong>Kualifikasi:</strong></p>
+      <ul>
+        <li>Menguasai HTML, CSS, dan tools desain seperti Figma atau Adobe XD</li>
+        <li>Kreatif, komunikatif, dan mampu bekerja mandiri maupun tim</li>
+        <li>Portofolio desain UI/UX menjadi nilai tambah</li>
+        <li>Minimal pengalaman 1 proyek desain website</li>
+      </ul>
+      <p>
+        Pekerjaan dapat dilakukan secara remote, namun tersedia juga opsi kerja di kantor Jakarta.
+      </p>
+    </div>
+
+    <button onclick="lamar()">Lamar Sekarang</button>
+  </div>
+
+  <script>
+    function lamar() {
+      const user = localStorage.getItem('loggedInUser');
+      if (!user) {
+        alert('Silakan login terlebih dahulu untuk melamar.');
+        window.location.href = 'login.html';
+      } else {
+        localStorage.setItem('detailLowonganId', 9);
+        window.location.href = 'lamar.html';
+      }
+    }
+  </script>
+
+</body>
+</html>

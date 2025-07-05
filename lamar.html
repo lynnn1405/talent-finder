@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lamar Lowongan - Talent Finder</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #2196f3;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+    }
+
+    .logo { font-weight: bold; font-size: 20px; }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: #2196f3;
+    }
+
+    .form-group input[type="file"] {
+      padding: 5px;
+    }
+
+    .form-group button {
+      padding: 10px 20px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .form-group button:hover {
+      background-color: #1976d2;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+      color: #999;
+      font-size: 14px;
+      border-top: 1px solid #ddd;
+    }
+
+    .logout-button {
+      background-color: #f44336;
+      color: white;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s;
+      margin-left: 20px;
+    }
+
+    .logout-button:hover {
+      background-color: #e53935;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Talent Finder</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="lowongan.html">Lowongan</a>
+      <a href="profil.html" id="user-name">Profil</a>
+      <button class="logout-button" onclick="logout()">Logout</button>
+    </nav>
+  </header>
+  
+
+  <div class="container">
+
+    <!-- Tambahkan ini setelah <div class="container"> -->
+    <div style="margin-bottom: 20px;">
+        <button onclick="window.location.href='lowongan.html'" style="background-color: #007BFF; color: #ffffff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">← Kembali ke Lowongan</button>
+    </div>
+  
+    
+    <h2>Melamar Lowongan</h2>
+
+    <div class="form-group">
+      <label for="nama-pelamar">Nama Lengkap</label>
+      <input type="text" id="nama-pelamar" placeholder="Masukkan nama lengkap" required />
+    </div>
+
+    <div class="form-group">
+      <label for="email-pelamar">Email</label>
+      <input type="email" id="email-pelamar" placeholder="Masukkan email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="file-pelamar">Unggah File Bakat (Foto/Audio/Video/Dokumen)</label>
+      <input type="file" id="file-pelamar" required />
+    </div>
+
+    <div class="form-group">
+      <label for="deskripsi-pelamar">Deskripsi Singkat Tentang Diri Anda</label>
+      <textarea id="deskripsi-pelamar" rows="4" placeholder="Jelaskan sedikit tentang diri Anda" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" onclick="submitApplication()">Kirim Lamaran</button>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Talent Finder. Dibuat dengan ❤️ oleh kelompok 3.
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Ambil data pengguna yang login dari localStorage
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      // Jika pengguna sudah login, tampilkan nama pengguna di Profil dan Navbar
+      if (loggedInUser) {
+        const userNameElement = document.getElementById("user-name");
+        if (userNameElement) {
+          userNameElement.textContent = loggedInUser.fullname || loggedInUser.email;  // Ganti dengan nama atau email pengguna
+        }
+      } else {
+        // Jika belum login, arahkan ke halaman login
+        window.location.href = "login.html";
+        
+      }
+      const jobId = localStorage.getItem("detailLowonganId");
+
+      // Fetch data lowongan berdasarkan ID (misalnya)
+      const lowongan = [
+        { id: 1, nama: "Vocalist Band Indie", kategori: "Musik", deskripsi: "Mencari vokalis wanita untuk band indie akustik di Medan." },
+        { id: 2, nama: "Penari Tradisional", kategori: "Tari", deskripsi: "Dibutuhkan penari untuk acara budaya bulanan kampus." },
+        { id: 3, nama: "Desainer Poster Event", kategori: "Desain", deskripsi: "Kami butuh desainer poster kreatif untuk event UKM." },
+        { id: 4, nama: "MC Acara Kampus", kategori: "Public Speaking", deskripsi: "Mencari MC berpengalaman untuk berbagai acara kampus." },
+        { id: 5, nama: "Web Developer", kategori: "IT", deskripsi: "Dibutuhkan back-end developer untuk sistem informasi internal." },
+        { id: 6, nama: "Gitaris Band Jazz", kategori: "Musik", deskripsi: "Mencari gitaris untuk band jazz yang sedang berkembang." },
+        { id: 7, nama: "Penata Rias Profesional", kategori: "Desain", deskripsi: "Kami mencari penata rias untuk acara pernikahan." },
+        { id: 8, nama: "Penyiar Radio Kampus", kategori: "Public Speaking", deskripsi: "Mencari penyiar untuk acara radio kampus." },
+        { id: 9, nama: "Web Designer", kategori: "IT", deskripsi: "Mencari web designer untuk mendesain website untuk perusahaan." },
+        { id: 10, nama: "Penari Modern", kategori: "Tari", deskripsi: "Mencari penari modern untuk pentas seni kampus." },
+        { id: 11, nama: "Gitaris Band Rock", kategori: "Musik", deskripsi: "Mencari gitaris untuk band rock." },
+        { id: 12, nama: "Desainer Grafis Digital", kategori: "Desain", deskripsi: "Mencari desainer grafis untuk desain media sosial dan promosi." }
+      ];
+
+      const job = lowongan.find(item => item.id == jobId);
+      if (job) {
+        document.querySelector("h2").textContent = `Lamar Lowongan: ${job.nama}`;
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+
+    function submitApplication() {
+      const nama = document.getElementById("nama-pelamar").value;
+      const email = document.getElementById("email-pelamar").value;
+      const file = document.getElementById("file-pelamar").files[0];
+      const deskripsi = document.getElementById("deskripsi-pelamar").value;
+
+      if (!nama || !email || !file || !deskripsi) {
+        alert("Semua kolom harus diisi!");
+        return;
+      }
+
+      // Simpan lamaran di LocalStorage (misalnya)
+      const lamaran = {
+        nama,
+        email,
+        file: file.name,
+        deskripsi,
+      };
+
+      // Simulasi kirim lamaran
+      alert("Lamaran Anda telah terkirim!");
+
+      // Redirect ke halaman lowongan setelah pengiriman
+      window.location.href = "lowongan.html";
+    }
+  </script>
+</body>
+</html>

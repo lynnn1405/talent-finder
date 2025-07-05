@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Lowongan - Penari Tradisional</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #007BFF;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      margin-bottom: 20px;
+    }
+
+    .info strong {
+      display: inline-block;
+      width: 120px;
+      color: #333;
+    }
+
+    .deskripsi {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Talent Finder</h1>
+  </header>
+
+  <div class="container">
+
+    <div style="margin-bottom: 20px;">
+      <button onclick="window.location.href='lowongan.html'" style="background-color: #007BFF; color: #ffffff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">← Kembali ke Lowongan</button>
+    </div>
+
+    <h2>Penari Tradisional</h2>
+
+    <div class="info"><strong>Kategori:</strong> Tari</div>
+    <div class="info"><strong>Lokasi:</strong> Medan</div>
+    <div class="info"><strong>Deadline:</strong> 25 April 2025</div>
+
+    <div class="deskripsi">
+      <p>
+        Kami membuka kesempatan bagi penari tradisional berbakat untuk berkontribusi dalam pelestarian budaya Indonesia. Bergabunglah dengan komunitas seni kami untuk tampil di berbagai pertunjukan budaya, festival daerah, dan event nasional.
+      </p>
+      <p><strong>Ketentuan:</strong></p>
+      <ul>
+        <li>Berusia 17–30 tahun</li>
+        <li>Memiliki pengalaman menari tari tradisional (Tari Saman, Piring, Tor-Tor, dll)</li>
+        <li>Mampu bekerja sama dalam tim tari dan mengikuti jadwal latihan</li>
+        <li>Bersedia tampil di luar kota jika dibutuhkan</li>
+        <li>Berkomitmen menjaga nilai dan etika budaya dalam setiap pertunjukan</li>
+        <li>Berdomisili di Medan dan sekitarnya</li>
+      </ul>
+    </div>
+
+    <button onclick="lamar()">Lamar Sekarang</button>
+  </div>
+
+  <script>
+    function lamar() {
+      const user = localStorage.getItem('loggedInUser');
+      if (!user) {
+        alert('Silakan login terlebih dahulu untuk melamar.');
+        window.location.href = 'login.html';
+      } else {
+        localStorage.setItem('detailLowonganId', 2); // ID lowongan diset 2 untuk penari tradisional
+        window.location.href = 'lamar.html';
+      }
+    }
+  </script>
+
+</body>
+</html>

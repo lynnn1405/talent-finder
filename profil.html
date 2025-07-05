@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profil - Talent Finder</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f4faff;
+    }
+
+    header {
+      background-color: #2196f3;
+      padding: 15px 30px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+    }
+    .logout-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-left: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: darkred;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      color: #222;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .profile-image-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #2196f3;
+    }
+
+    .camera-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: #2196f3;
+      color: white;
+      border-radius: 50%;
+      padding: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      font-size: 16px;
+      background-color: transparent;
+    }
+
+    input:read-only {
+      color: #444;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+        margin: 30px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Talent Finder</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="lowongan.html">Lowongan</a>
+      <a href="profile.html" id="profilNav">Profil</a>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Profil Saya</h2>
+    <div class="profile-image-wrapper">
+      <img id="profileImage" src="https://i.pravatar.cc/150?u=user" alt="Profile" class="profile-pic">
+      <label for="uploadImage" class="camera-icon">📷</label>
+      <input type="file" id="uploadImage" accept="image/*">
+    </div>
+
+    <form>
+      <input type="text" id="fullname" readonly>
+      <input type="email" id="email" readonly>
+      <input type="text" id="alamat" readonly>
+      <input type="text" id="nohp" readonly>
+      <input type="text" id="bakat" readonly>
+    </form>
+  </div>
+
+  <script>
+        document.addEventListener("DOMContentLoaded", function() {
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+      if (loggedInUser) {
+        const userNameElement = document.getElementById("user-name");
+        userNameElement.textContent = loggedInUser.fullname || loggedInUser.email;
+      } else {
+        window.location.href = "login.html";
+      }
+    }
+  )
+
+
+    const loginUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const userIndex = users.findIndex(u => u.email === loginUser?.email);
+    const user = users[userIndex];
+
+    if (!user) {
+      alert("Silakan login terlebih dahulu.");
+      window.location.href = "login.html";
+    } else {
+      // Update nama user di navbar
+      document.getElementById("profilNav").textContent = user.fullname;
+
+      // Isi form dengan data user
+      document.getElementById("fullname").value = user.fullname;
+      document.getElementById("email").value = user.email;
+      document.getElementById("alamat").value = user.alamat;
+      document.getElementById("nohp").value = user.nohp;
+      document.getElementById("bakat").value = user.bakat;
+
+      // Tampilkan foto profil
+      const imgEl = document.getElementById("profileImage");
+      if (user.fotoProfil) {
+        imgEl.src = user.fotoProfil;
+      }
+
+      // Update foto profil jika user upload gambar baru
+      document.getElementById("uploadImage").addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const dataURL = e.target.result;
+            imgEl.src = dataURL;
+            user.fotoProfil = dataURL;
+            users[userIndex] = user;
+            localStorage.setItem("users", JSON.stringify(users));
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", function (e) {
+      e.preventDefault();
+      localStorage.removeItem("loggedInUser");
+      alert("Anda telah logout.");
+      window.location.href = "login.html";
+    });
+  
+  </script>
+
+</body>
+</html>
+    

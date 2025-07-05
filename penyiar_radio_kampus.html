@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Lowongan - Penyiar Radio Kampus</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #007BFF;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      margin-bottom: 20px;
+    }
+
+    .info strong {
+      display: inline-block;
+      width: 120px;
+      color: #333;
+    }
+
+    .deskripsi {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Talent Finder</h1>
+  </header>
+
+  <div class="container">
+
+    <div style="margin-bottom: 20px;">
+      <button onclick="window.location.href='lowongan.html'" style="background-color: #007BFF; color: #ffffff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">← Kembali ke Lowongan</button>
+    </div>
+
+    <h2>Penyiar Radio Kampus</h2>
+
+    <div class="info"><strong>Kategori:</strong> Public Speaking</div>
+    <div class="info"><strong>Lokasi:</strong> Kampus dan studio radio terdekat</div>
+    <div class="info"><strong>Deadline:</strong> 15 Mei 2025</div>
+
+    <div class="deskripsi">
+      <p>
+        Kami membuka kesempatan bagi kamu yang suka berbicara dan percaya diri untuk menjadi penyiar radio kampus. Bekerja secara shift dengan program menarik tiap minggunya!
+      </p>
+      <p><strong>Kualifikasi:</strong></p>
+      <ul>
+        <li>Mahasiswa aktif dengan kemampuan berbicara yang baik</li>
+        <li>Bersemangat dan memiliki wawasan luas</li>
+        <li>Dapat bekerjasama dengan tim produksi</li>
+        <li>Tertarik dengan dunia broadcasting dan komunikasi</li>
+      </ul>
+      <p>
+        Pengalaman tidak wajib, tapi akan menjadi nilai tambah. Kami memberikan pelatihan sebelum siaran.
+      </p>
+    </div>
+
+    <button onclick="lamar()">Lamar Sekarang</button>
+  </div>
+
+  <script>
+    function lamar() {
+      const user = localStorage.getItem('loggedInUser');
+      if (!user) {
+        alert('Silakan login terlebih dahulu untuk melamar.');
+        window.location.href = 'login.html';
+      } else {
+        localStorage.setItem('detailLowonganId', 8);
+        window.location.href = 'lamar.html';
+      }
+    }
+  </script>
+
+</body>
+</html>

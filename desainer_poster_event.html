@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Lowongan - Desainer Poster Event</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #007BFF;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      margin-bottom: 20px;
+    }
+
+    .info strong {
+      display: inline-block;
+      width: 120px;
+      color: #333;
+    }
+
+    .deskripsi {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Talent Finder</h1>
+  </header>
+
+  <div class="container">
+
+    <div style="margin-bottom: 20px;">
+      <button onclick="window.location.href='lowongan.html'" style="background-color: #007BFF; color: #ffffff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">← Kembali ke Lowongan</button>
+    </div>
+
+    <h2>Desainer Poster Event</h2>
+
+    <div class="info"><strong>Kategori:</strong> Desain</div>
+    <div class="info"><strong>Lokasi:</strong> Medan</div>
+    <div class="info"><strong>Deadline:</strong> 22 April 2025</div>
+
+    <div class="deskripsi">
+      <p>
+        Kami butuh desainer poster kreatif untuk mendukung kegiatan dan promosi event UKM di kampus. Kamu akan menjadi bagian penting dalam menciptakan visual yang menarik dan informatif untuk menarik perhatian mahasiswa dan masyarakat umum.
+      </p>
+      <p><strong>Ketentuan:</strong></p>
+      <ul>
+        <li>Berusia 17–27 tahun</li>
+        <li>Memiliki kemampuan desain grafis dasar (Photoshop, Canva, CorelDraw, Figma, dll)</li>
+        <li>Kreatif, inovatif, dan mampu bekerja sesuai deadline</li>
+        <li>Dapat bekerja dalam tim dan menerima masukan</li>
+        <li>Menyertakan portofolio desain saat melamar (jika ada)</li>
+        <li>Diutamakan berdomisili di Medan dan sekitarnya</li>
+      </ul>
+    </div>
+
+    <button onclick="lamar()">Lamar Sekarang</button>
+  </div>
+
+  <script>
+    function lamar() {
+      const user = localStorage.getItem('loggedInUser');
+      if (!user) {
+        alert('Silakan login terlebih dahulu untuk melamar.');
+        window.location.href = 'login.html';
+      } else {
+        localStorage.setItem('detailLowonganId', 3); // ID lowongan diset 3 untuk desainer poster
+        window.location.href = 'lamar.html';
+      }
+    }
+  </script>
+
+</body>
+</html>

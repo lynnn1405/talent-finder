@@ -1,0 +1,253 @@
+<!DOCTYPE html> 
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daftar Lowongan - Talent Finder</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #2196f3;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+    }
+
+    .logo { font-weight: bold; font-size: 20px; }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .search-filter {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .search-filter input {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .search-filter input:focus {
+      border-color: #2196f3;
+    }
+
+    .job-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .job-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .job-card h3 { margin-bottom: 10px; }
+
+    .job-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .job-card .kategori {
+      font-size: 13px;
+      color: #888;
+      margin: 10px 0;
+    }
+
+    .job-card .btn-wrap {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+    }
+
+    .job-card button {
+      padding: 8px 12px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 14px;
+    }
+
+    .job-card button:hover {
+      background-color: #1976d2;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+      color: #999;
+      font-size: 14px;
+      border-top: 1px solid #ddd;
+    }
+
+    .logout-button {
+      background-color: #f44336;
+      color: white;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s;
+      margin-left: 20px;
+    }
+
+    .logout-button:hover {
+      background-color: #e53935;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Talent Finder</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="lowongan.html">Lowongan</a>
+      <a href="profil.html" id="user-name">Profil</a>
+      <button class="logout-button" onclick="logout()">Logout</button>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Daftar Lowongan Tersedia</h2>
+    <div class="search-filter">
+      <input type="text" id="search-input" placeholder="Cari Lowongan..." />
+    </div>
+    <div class="job-list" id="jobList"></div>
+  </div>
+
+  <footer>
+    &copy; 2025 Talent Finder. Dibuat dengan ❤️ oleh kelompok 3.
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+      if (loggedInUser) {
+        const userNameElement = document.getElementById("user-name");
+        userNameElement.textContent = loggedInUser.fullname || loggedInUser.email;
+      } else {
+        window.location.href = "login.html";
+      }
+
+      const lowongan = [
+        { id: 1, nama: "Vocalist Band Indie", kategori: "Musik", deskripsi: "Mencari vokalis wanita untuk band indie akustik di Medan." },
+        { id: 2, nama: "Penari Tradisional", kategori: "Tari", deskripsi: "Dibutuhkan penari untuk acara budaya bulanan kampus." },
+        { id: 3, nama: "Desainer Poster Event", kategori: "Desain", deskripsi: "Kami butuh desainer poster kreatif untuk event UKM." },
+        { id: 4, nama: "MC Acara Kampus", kategori: "Public Speaking", deskripsi: "Mencari MC berpengalaman untuk berbagai acara kampus." },
+        { id: 5, nama: "Web Developer", kategori: "IT", deskripsi: "Dibutuhkan back-end developer untuk sistem informasi internal." },
+        { id: 6, nama: "Gitaris Band Jazz", kategori: "Musik", deskripsi: "Mencari gitaris untuk band jazz yang sedang berkembang." },
+        { id: 7, nama: "Penata Rias Profesional", kategori: "Desain", deskripsi: "Kami mencari penata rias untuk acara pernikahan." },
+        { id: 8, nama: "Penyiar Radio Kampus", kategori: "Public Speaking", deskripsi: "Mencari penyiar untuk acara radio kampus." },
+        { id: 9, nama: "Web Designer", kategori: "IT", deskripsi: "Mencari web designer untuk mendesain website untuk perusahaan." },
+        { id: 10, nama: "Penari Modern", kategori: "Tari", deskripsi: "Mencari penari modern untuk pentas seni kampus." },
+        { id: 11, nama: "Gitaris Band Rock", kategori: "Musik", deskripsi: "Mencari gitaris untuk band rock." },
+        { id: 12, nama: "Desainer Grafis Digital", kategori: "Desain", deskripsi: "Mencari desainer grafis untuk desain media sosial dan promosi." }
+      ];
+
+      const jobListEl = document.getElementById("jobList");
+
+      function renderLowongan(data) {
+        jobListEl.innerHTML = '';
+        data.forEach(job => {
+          const jobCard = document.createElement("div");
+          jobCard.className = "job-card";
+          jobCard.innerHTML = `
+            <h3>${job.nama}</h3>
+            <p>${job.deskripsi}</p>
+            <div class="kategori">Kategori: <strong>${job.kategori}</strong></div>
+            <div class="btn-wrap">
+              <button onclick="lihatDetail(${job.id})">Lihat Detail</button>
+              <button onclick="lamarCepat(${job.id})">Lamar Cepat</button>
+            </div>
+          `;
+          jobListEl.appendChild(jobCard);
+        });
+      }
+
+      renderLowongan(lowongan);
+
+      document.getElementById("search-input").addEventListener("keyup", function(e) {
+        const keyword = e.target.value.toLowerCase();
+        const filtered = lowongan.filter(job =>
+          job.nama.toLowerCase().includes(keyword) ||
+          job.kategori.toLowerCase().includes(keyword) ||
+          job.deskripsi.toLowerCase().includes(keyword)
+        );
+        renderLowongan(filtered);
+      });
+
+      window.lihatDetail = function(id) {
+        const halaman = {
+          1: "vokalis_band_indie.html",
+          2: "penari_tradisional.html",
+          3: "desainer_poster_event.html",
+          4: "mc_acara_kampus.html",
+          5: "web_developer.html",
+          6: "gitaris_band_jazz.html",
+          7: "penata_rias_profesional.html",
+          8: "penyiar_radio_kampus.html",
+          9: "web_designer.html",
+          10: "penari_modern.html",
+          11: "gitaris_band_rock.html",
+          12: "desainer_grafis_digital.html"
+        };
+        window.location.href = halaman[id] || "lowongan.html";
+      }
+
+      window.lamarCepat = function(id) {
+        localStorage.setItem("lowonganId", id);
+        window.location.href = "lamar.html";
+      }
+
+      window.logout = function() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+
+</body>
+</html>
